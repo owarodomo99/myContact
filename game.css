@@ -1,0 +1,53 @@
+body {
+    text-align: center;
+  }
+  h1 {
+    margin: 30px;
+    font-family: 'Lobster', cursive;
+    font-size: 50px;
+    color: rgb(7, 229, 245);
+    text-align: center;
+  }
+
+  p5 {
+    font-size: 20px;
+    color: rgb(103, 214, 209);
+    font-family: 'Lobster', cursive;
+    text-align: center;
+  }
+
+    h2{
+        font-size: 30px;
+    color: cornflowerblue;
+    font-family: 'Lobster', cursive;
+    text-align: center;
+    }
+    a{
+        text-align: left;
+     font-size: 20px;
+    font-family: 'Lobster', cursive;
+    }
+    b{
+        text-align: right;
+        font-size: 20px;
+    
+    font-family: 'Lobster', cursive;
+  
+    }
+    input {
+        text-align: center;
+       
+      text-shadow: rgb(194, 151, 12);
+        width: 320px;
+        display: block;
+        margin: 1rem auto;
+        border: 2px solid rgb(184, 84, 84);
+        padding: 8px;
+        background-origin: content-box;
+        border-radius: 10px;
+        border-block-start: aqua;
+        color: darkorange;
+    
+        
+    
+      }

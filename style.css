@@ -1,0 +1,32 @@
+
+
+    input {
+      text-shadow: rgb(194, 151, 12);
+        width: 320px;
+        display: block;
+        margin: 2rem auto;
+        border: 2px solid rgb(184, 84, 84);
+        padding: 6px;
+        background: transparent;
+        border-radius: 16px;
+        outline: none;
+        color: darkorange;
+        border-left-style: double;
+        text-align: center;
+      }
+      h6{
+        font-family: 'Source Sans Pro', sans-serif;
+        font-size: 22px;
+      }
+      h5{
+        font-family: 'Source Sans Pro', sans-serif;
+        font-size: 22px;
+      }
+      h4{
+        font-family: 'Source Sans Pro', sans-serif;
+        font-size: 22px;
+      }
+option{
+  text-align: center;
+}      
+      
