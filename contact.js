@@ -1,110 +1,32 @@
-
-/*$('#button').click(() => {
-db.collection("users")
-    .add({
-        subject: $('#subject').val(),
-        credit: '3',
-        grade: Number($('#grade').val()),
-    })
-    .then(function(docRef) {
-        console.log("Document written with ID: ", docRef.id);
-        $('#subject').val('')
-        $('#grade').val('')
-    })
-    .catch(function(error) {
-        console.error("Error adding document: ", error);
-    });
-})
-/*db.collection('users').orderBy("subject").onSnapshot(doc => {
-        let table = $('tbody')[0]
-        $("tbody tr").remove()
-        gpa = 0
-        credit = 0
-        //document.querySelectorAll("tbody tr").forEach(item => item.remove())
-        doc.forEach(item => {
-            let row = table.insertRow(-1)
-            let firstCell = row.insertCell(0)
-            let secoundCell = row.insertCell(1)
-            firstCell.textContent = item.data().subject
-            secoundCell.textContent = item.data().grade
-            gpa += ((item.data().grade) * (item.data().credit))
-            credit += item.data().credit
-        })
-        console.log(gpa/credit)
-        $('h4').text(gpa/credit)
-    })
-*/
-
-// index.js
-//let firebaseConfig = {
- //   apiKey: "AIzaSyBzfdUNQR9e0fVLbnSA_eSva6oP3feq9HI",
- //   authDomain: "localhost",
- //   projectId: "database-2d6f4",
-//};
-// Initialize Firebase
 let firebaseConfig = {
-    apiKey: "AIzaSyBzfdUNQR9e0fVLbnSA_eSva6oP3feq9HI",
+    apiKey: "AIzaSyCJ-BJWtoutx5abX8yHX-SBKy3OFALD6v8",
     authDomain: "localhost",
-    projectId: "database-2d6f4",
+    projectId: "lab5-9e681",
 };
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 let db = firebase.firestore();
-
-
-
+let all = 0;
+let cmale = 0, cfemale = 0, cother = 0;
+let pmale = 0.00, pfemale = 0.00, pother = 0.00; 
 
 $('button').click(() => {
 
-    
-    if ($('#firstname').val()==='') {
-        alert('Please input your FirstName !');
-        document.myForm.firstname.focus();
-    
-    }
-
-    else if ($('#lastname').val()==='') {
-        alert('Please input your LastName !');
-        document.myForm.lastname.focus();
-     
-    }
-    else if($('#gender').val()===''){
-        alert('please choose yours gender.');
-        document.myForm.gender.focus();
-    }
-    else if ( $('#email').val()==='') {
-        alert('Please input your Email !');
-        document.myForm.email.focus();
-      
-    }
-    else if ( validateEmail($('#email').val())===false) {
-        alert('Email is not correct!');
-        document.myForm.email.focus();
-      
-    }
-
-    else if ( $('#massage').val() === '') {
-        alert('Please input your Massage !');
-        document.myForm.massage.focus();
-       
-
-    }else{
-    db.collection("USers").add({
-        firstname: $('#firstname').val(),
-        lastname: $('#lastname').val(),
-        gender: Number($('#gender').val()),
-        email: $('#email').val(),
-        massage: $('#massage').val(),
-          
-            
+    if (validate()) {
+        db.collection("USers").add({
+            firstname: $('#firstname').val(),
+            lastname: $('#lastname').val(),
+            gender: $('#gender').val(),
+            email: $('#email').val(),
+            massage: $('#massage').val(),         
         })
         .then(function (docRef) {
             console.log("Document written with ID: ", docRef.id);
-            $('#firstname').val(' ')
-            $('#lastname').val(' ')
-            $('#gender').val(' ')
-            $('#email').val(' ')
-            $('#massage').val(' ')
+            $('#firstname').val('')
+            $('#lastname').val('')
+            $('#gender').val(-1);
+            $('#email').val('');
+            $('#massage').val('')
         })
         .catch(function (error) {
             console.error("Error adding document: ", error);
@@ -112,16 +34,8 @@ $('button').click(() => {
     }
 });
 
-
-
-
 db.collection("USers").onSnapshot(doc=>{
     let table = $('tbody')[0]
-   Male=0;
-   Female=0;
-   Other=0;
-   SumG=0;
-   
     $("tbody tr").remove();
     
     doc.forEach(item=>{
@@ -133,28 +47,68 @@ db.collection("USers").onSnapshot(doc=>{
         let fifthcell = row.insertCell(4)
         firstcell.textContent=item.data().firstname
         secondcell.textContent=item.data().lastname
-        thirdcell.textContent=GString(item.data().gender)
+        thirdcell.textContent=item.data().gender
         fourthcell.textContent=item.data().email
         fifthcell.textContent=item.data().massage
-        if(item.data().gender==1){
-            Male+=1;
-            SumG+=1;
-        }else if(item.data().gender==2){
-            Female+=1;
-            SumG+=1;
+        if (item.data().gender === 'male') {
+            all++;
+            cmale++;
+        } else if (item.data().gender === 'female') {
+            all++;
+            cfemale++;
+        } else {
+            all++;
+            cother++;
         }
-        else if(item.data().gender==3){
-            Other+=1;
-            SumG+=1;
-        }else{
-            SumG=1;
-        }
-     
     })
-   console.log()
-    $('h4').text("Male: "+(Male*100/SumG)+"%    "+"Female: "+Female*100/SumG+"%     "+"Other: "+Other*100/SumG+"%    ")
+
+    pmale = (100/all)*cmale;
+    pfemale = (100/all)*cfemale;
+    pother = (100/all)*cother;
+    $('b1').text(pmale + " %")
+    $('b2').text(pfemale + " %")
+    $('b3').text(pother + " %")
 })
 
+function validate() {
+    let fname = document.myForm.firstname.value;
+    let lname = document.myForm.lastname.value;
+    let gen = document.myForm.gender.value;
+    let email = document.myForm.email.value;
+    let msg = document.myForm.massage.value;
+
+    if (fname === '') {
+        alert('Please input your FirstName !');
+        document.myForm.firstname.focus();
+        return false;
+    }
+
+    if (lname === '') {
+        alert('Please input your LastName !');
+        document.myForm.lastname.focus();
+        return false;
+    }
+
+    if (gen === 'none') {
+        alert('Please input your Country !');   
+        document.myForm.gender.focus();
+        return false;
+    }
+
+    if (email === '' || !validateEmail(email)) {
+        alert('Please input your Email !');
+        document.myForm.email.focus();
+        return false;
+    }
+
+    if (msg === '') {
+        alert('Please input your Massage !');
+        document.myForm.massage.focus();
+        return false;
+    }
+
+    return true;
+}
 
 let validateEmail = (email) => {
     atpos = email.indexOf('@');
@@ -165,18 +119,4 @@ let validateEmail = (email) => {
         return false;
     }
     return true;
-}
-
-function GString(score){
-    
-    if(score==1){
-    score = 'Male';
-    }
-    else if(score==2){
-    score = 'Female';
-    }
-    else if(score==3){
-    score = 'Other';
-    }
-    return score;
 }
